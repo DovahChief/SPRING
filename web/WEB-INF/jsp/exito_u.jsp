@@ -39,7 +39,7 @@
                 Se ha creado su nueva cuenta exitosamente por favor verifique 
                 su direccion de correo  electronico (${requestScope.correo}) para mas informacion
             </p>
-            <a href="index" class="btn btn-success">INICIO</a>
+            <a href="index.htm" class="btn btn-success">INICIO</a>
             <br><br>
             </div>
             
