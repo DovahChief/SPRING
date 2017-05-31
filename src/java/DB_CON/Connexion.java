@@ -27,7 +27,7 @@ public class Connexion {
     private Connection conn = null;
     private Statement  stmt = null;
     private ResultSet  rset = null;
-    private ArrayList<String> nom_correo = new ArrayList();
+    private ArrayList<user> usuarios= new ArrayList();
     
     
     public ResultSet fetch_users(){
@@ -48,7 +48,7 @@ public class Connexion {
     }
     
     
-    public ArrayList<String> fetch_users(String nombre){
+    public ArrayList<user> fetch_users(String nombre){
         
         
         try {
@@ -61,20 +61,21 @@ public class Connexion {
             //consulta 
             rset = stmt.executeQuery("SELECT * FROM users where user_first = \'".concat(nombre).concat("\'"));
             while (rset.next()){
-                nom_correo.add(rset.getObject(3).toString());
-                nom_correo.add(rset.getObject(5).toString());
+                usuarios.add(
+                            new user(rset.getObject(2).toString(),rset.getObject(3).toString(),
+                                     rset.getObject(4).toString(),rset.getObject(5).toString() )
+                            );
             }
                         
         }//fin del try//fin del try
         catch (SQLException | ClassNotFoundException e) {} //fin del catch
-        return (nom_correo);
+        return (usuarios);
     }
     
     public boolean inserta(user nuevo){
         boolean exito = false;
         String sql_str = "INSERT INTO users (user_nickname, user_first, user_last, user_email)"
-                        + " values ( \'" + nuevo.getUsername()+ "\', \'"+ nuevo.getUser_first()+ "\', \'"
-                        + nuevo.getUser_last()+ "\', \'"+ nuevo.getUser_email()+"\')";  
+                        + " values ("+ nuevo.InsertCad() +")";  
         
         try {           
             Class.forName(CONTROLADOR);     //carga controlador        
